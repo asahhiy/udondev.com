@@ -8,10 +8,10 @@ export default function HeaderComponents() {
     <div className='flex justify-between bg-black'>
       <header className='font-bebas text-7xl flex block-inline text-creamwhite items-center m-1'>udondev.com</header>
       <div className='text-creamwhite flex items-center '>
-        <a href="#" className='m-3'>About Me</a>
-        <a href="#" className='m-3'>Skills</a>
-        <a href="#" className='m-3'>Works</a>
-        <a href="#" className='m-3'>Contact</a>
+        <a href="#about" className='m-3'>About Me</a>
+        <a href="#skills" className='m-3'>Skills</a>
+        <a href="#works" className='m-3'>Works</a>
+        <a href="#contact" className='m-3'>Contact</a>
 
       </div>
       <div className='w-[200px] flex items-center'>

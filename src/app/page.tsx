@@ -8,10 +8,19 @@ export default function page() {
   return (
     <div className="items-center">
       <p className='font-bebas text-9xl flex justify-center'>Portfolio</p>
-      <AboutmeComponent />
-      <SkillsComponent />
-      <WorksComponent />
-      <ContactComponent />
+      <section id="about">
+        <AboutmeComponent />
+      </section>
+      <section id="skills">
+        <SkillsComponent />
+      </section>
+      <section id="works">
+        <WorksComponent />
+      </section>
+      <section id="contact">
+        <ContactComponent />
+      </section>
+
     </div>
   )
 }
