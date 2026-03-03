@@ -1,3 +1,4 @@
+import PhysicsCardComponent from "@/components/aboutme/PhysicsCardComponent"
 import AboutmeComponent from "@/components/AboutmeComponent"
 import ContactComponent from "@/components/ContactComponent"
 import Example from "@/components/exmaple"
@@ -8,6 +9,26 @@ export default function page() {
   return (
     <div className="items-center space-y-4">
       <div className="grid grid-cols-12 gap-4 mt-10 mx-10" >
+
+        <div className="col-span-12 lg:col-span-4 bg-amber-300 h-auto rounded-2xl" >
+          <section id="about">
+            <AboutmeComponent />
+          </section>
+
+        </div>
+        <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl">
+          <PhysicsCardComponent />
+        </div>
+        <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl space-y-5">
+          <section id="works">
+            <WorksComponent />
+          </section>
+        </div>
+        <div className="col-span-12 lg:col-span-4 bg-amber-300 h-auto rounded-2xl" >
+          <section id="skills">
+            <SkillsComponent />
+          </section>
+        </div>
         <div className="col-span-12 lg:col-span-4 bg-amber-500 h-auto rounded-2xl">
           <section id="contact">
             <ContactComponent />
@@ -16,25 +37,6 @@ export default function page() {
         </div>
         <div className="col-span-12 lg:col-span-5 bg-amber-400 h-auto rounded-2xl" />
         <div className="col-span-12 lg:col-span-3 bg-amber-300 h-auto rounded-2xl" />
-        <div className="col-span-12 lg:col-span-2 bg-amber-300 h-auto rounded-2xl" />
-        <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl" >
-          <p className='font-bebas text-9xl flex justify-center'>Portfolio</p>
-          <section id="about">
-            <AboutmeComponent />
-          </section>
-
-        </div>
-        <div className="col-span-12 lg:col-span-2 bg-amber-300 h-auto rounded-2xl" />
-        <div className="col-span-12 lg:col-span-4 bg-amber-300 h-auto rounded-2xl space-y-5">
-          <section id="works">
-            <WorksComponent />
-          </section>
-        </div>
-        <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl" >
-          <section id="skills">
-            <SkillsComponent />
-          </section>
-        </div>
       </div>
 
 
