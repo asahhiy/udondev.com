@@ -19,7 +19,7 @@ export default function WorkCardComponent({ title, ja_contents, en_contents, lin
   const [isEnglish] = useAtom(headerToggleAtom)
   return (
     <div
-      className="relative flex w-80 flex-col rounded-xl bg-gradient-to-br from-white to-gray-50 bg-clip-border text-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 m-3"
+      className="relative flex w-80 flex-col rounded-xl space-y-4 bg-gradient-to-br from-white to-gray-50 bg-clip-border text-gray-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 m-3"
     >
       <div
         className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-clip-border shadow-lg group"
