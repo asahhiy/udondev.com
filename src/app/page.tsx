@@ -8,7 +8,6 @@ import WorksComponent from "@/components/WorksComponent"
 export default function page() {
   return (
     <div className="items-center space-y-4">
-      <PhysicsCardComponent />
       <div className="grid grid-cols-12 gap-4 mt-10 mx-10" >
 
         <div className="col-span-12 lg:col-span-4 bg-amber-300 h-auto rounded-2xl" >
@@ -18,6 +17,8 @@ export default function page() {
 
         </div>
         <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl">
+
+          <PhysicsCardComponent />
         </div>
         <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl space-y-5">
           <section id="works">

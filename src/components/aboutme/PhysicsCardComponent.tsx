@@ -14,7 +14,7 @@ declare module '@react-three/fiber' {
 }
 export default function PhysicsCardComponent() {
   return (
-    <div className='h-100'>
+    <div className='h-200'>
       <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
         <Physics>
           <Band />
@@ -73,17 +73,17 @@ function Band() {
 
   return (<>
     <group position={[0, 4, 0]}>
-      <RigidBody ref={fixed} type='fixed' />
-      <RigidBody position={[0.5, 0, 0]} ref={j1}>
+      <RigidBody ref={fixed} type='fixed' angularDamping={2} linearDamping={2} />
+      <RigidBody position={[0.5, 0, 0]} ref={j1} angularDamping={2} linearDamping={2}>
         <BallCollider args={[0.1]} />
       </RigidBody>
-      <RigidBody position={[1, 0, 0]} ref={j2}>
+      <RigidBody position={[1, 0, 0]} ref={j2} angularDamping={2} linearDamping={2}>
         <BallCollider args={[0.1]} />
       </RigidBody>
-      <RigidBody position={[1.5, 0, 0]} ref={j3}>
+      <RigidBody position={[1.5, 0, 0]} ref={j3} angularDamping={2} linearDamping={2}>
         <BallCollider args={[0.1]} />
       </RigidBody>
-      <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} >
+      <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={2}>
         <CuboidCollider args={[0.8, 1.125, 0.01]} />
         <mesh
           onPointerUp={(e) => drag(false)}
