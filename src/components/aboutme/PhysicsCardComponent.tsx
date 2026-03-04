@@ -14,8 +14,8 @@ declare module '@react-three/fiber' {
 }
 export default function PhysicsCardComponent() {
   return (
-    <div>
-      <Canvas>
+    <div className='h-100'>
+      <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
         <Physics>
           <Band />
         </Physics>
@@ -32,6 +32,16 @@ function Band() {
   const j2 = useRef<RapierRigidBody>(null!)
   const j3 = useRef<RapierRigidBody>(null!)
 
+  const card = useRef<RapierRigidBody>(null!)
+  const vec = new THREE.Vector3
+  const ang = new THREE.Vector3
+  const rot = new THREE.Vector3
+  const dir = new THREE.Vector3
+  const [dragged, drag] = useState<THREE.Vector3 | false>(false)
+
+  useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.25, 0]])
+
+
   const { width, height } = useThree((state) => state.size)
   const [curve] = useState(() => new THREE.CatmullRomCurve3([
     new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()
@@ -41,30 +51,53 @@ function Band() {
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1])
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1])
 
-  useFrame(() => {
+  useFrame((state) => {
+    if (dragged) {
+      vec.set(state.pointer.x, state.pointer.y, 0.5).unproject(state.camera)
+      dir.copy(vec).sub(state.camera.position).normalize()
+      vec.add(dir.multiplyScalar(state.camera.position.length()))
+      card.current.setNextKinematicTranslation({ x: vec.x - dragged.x, y: vec.y - dragged.y, z: vec.z - dragged.z })
+    }
     if (fixed.current && j1.current && j2.current && j3.current && band.current) {
       curve.points[0].copy(j3.current.translation())
       curve.points[1].copy(j2.current.translation())
       curve.points[2].copy(j1.current.translation())
       curve.points[3].copy(fixed.current.translation());
       (band.current.geometry as MeshLineGeometry).setPoints(curve.getPoints(32))
+
+      ang.copy(card.current.angvel())
+      rot.copy(card.current.rotation())
+      card.current.setAngvel({ x: ang.x, y: ang.y - rot.y * 0.25, z: ang.z }, true)
     }
   })
 
   return (<>
-    <RigidBody ref={fixed} type='fixed' />
-    <RigidBody position={[0.5, 0, 0]} ref={j1}>
-      <BallCollider args={[0.1]} />
-    </RigidBody>
-    <RigidBody position={[1, 0, 0]} ref={j2}>
-      <BallCollider args={[0.1]} />
-    </RigidBody>
-    <RigidBody position={[1.5, 0, 0]} ref={j3}>
-      <BallCollider args={[0.1]} />
-    </RigidBody>
+    <group position={[0, 4, 0]}>
+      <RigidBody ref={fixed} type='fixed' />
+      <RigidBody position={[0.5, 0, 0]} ref={j1}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      <RigidBody position={[1, 0, 0]} ref={j2}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      <RigidBody position={[1.5, 0, 0]} ref={j3}>
+        <BallCollider args={[0.1]} />
+      </RigidBody>
+      <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} >
+        <CuboidCollider args={[0.8, 1.125, 0.01]} />
+        <mesh
+          onPointerUp={(e) => drag(false)}
+          onPointerDown={(e) => drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))}
+        >
+          <planeGeometry args={[0.8 * 2, 1.125 * 2]} />
+          <meshBasicMaterial color='black' side={THREE.DoubleSide} />
+        </mesh>
+      </RigidBody>
+
+    </group>
     <mesh ref={band}>
       <meshLineGeometry />
-      <meshLineMaterial color="white" resolution={[width, height]} lineWidth={1} args={[{ resolution: new THREE.Vector2(width, height) }]} />
+      <meshLineMaterial color="black" resolution={[width, height]} lineWidth={1} args={[{ resolution: new THREE.Vector2(width, height) }]} />
     </mesh>
   </>
   )
