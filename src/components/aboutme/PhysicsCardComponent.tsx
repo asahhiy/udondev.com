@@ -26,7 +26,7 @@ export default function PhysicsCardComponent() {
       <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
         <ambientLight intensity={1.5} />
         <Environment preset='city' />
-        <Physics>
+        <Physics interpolate>
           <Band />
         </Physics>
       </Canvas>
@@ -99,17 +99,17 @@ function Band() {
 
   return (<>
     <group position={[0, 4, 0]}>
-      <RigidBody ref={fixed} type='fixed' angularDamping={2} linearDamping={2} />
-      <RigidBody position={[0.5, 0, 0]} ref={j1} angularDamping={2} linearDamping={2}>
+      <RigidBody ref={fixed} type='fixed' angularDamping={2} linearDamping={3} />
+      <RigidBody position={[0.5, 0, 0]} ref={j1} angularDamping={2} linearDamping={3}>
         <BallCollider args={[0.1]} />
       </RigidBody>
-      <RigidBody position={[1, 0, 0]} ref={j2} angularDamping={2} linearDamping={2}>
+      <RigidBody position={[1, 0, 0]} ref={j2} angularDamping={2} linearDamping={3}>
         <BallCollider args={[0.1]} />
       </RigidBody>
-      <RigidBody position={[1.5, 0, 0]} ref={j3} angularDamping={2} linearDamping={2}>
+      <RigidBody position={[1.5, 0, 0]} ref={j3} angularDamping={2} linearDamping={3}>
         <BallCollider args={[0.1]} />
       </RigidBody>
-      <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={2}>
+      <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={3}>
         <CuboidCollider args={[0.8, 1.125, 0.01]} />
         <group
           scale={1}
