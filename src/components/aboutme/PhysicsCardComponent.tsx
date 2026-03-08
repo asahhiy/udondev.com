@@ -6,8 +6,7 @@ import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphe
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { type ThreeElement } from '@react-three/fiber'
 
-import { Environment, useGLTF, useTexture, Lightformer } from '@react-three/drei'
-import { hover } from 'motion'
+import { Environment, useGLTF, useTexture, Lightformer, Center } from '@react-three/drei'
 
 
 extend({ MeshLineGeometry, MeshLineMaterial })
@@ -27,7 +26,7 @@ export default function PhysicsCardComponent() {
       <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
         <ambientLight intensity={1.5} />
         <Environment preset='city' />
-        <Physics debug={true}>
+        <Physics>
           <Band />
         </Physics>
       </Canvas>
@@ -112,23 +111,20 @@ function Band() {
       </RigidBody>
       <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={2}>
         <CuboidCollider args={[0.8, 1.125, 0.01]} />
-        <mesh
+        <group
+          scale={1}
+          position={[0,0,0]}
+          rotation={[0,Math.PI / 2,0]}
           onPointerOver={() => hover(true)}
           onPointerOut={() => hover(false)}
-          onPointerUp={(e) => {
-            (e.target as HTMLElement).releasePointerCapture(e.pointerId)
-            drag(false)
-          }}
-          onPointerDown={(e) => drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))}
+          onPointerUp={(e) => ((e.target as Element).releasePointerCapture(e.pointerId), drag(false))}
+          onPointerDown={(e) => ((e.target as Element).setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}
         >
-          <planeGeometry args={[0.8 * 2, 1.125 * 2]} />
-          <meshStandardMaterial
-            map={cardTexture}
-            map-colorSpace={THREE.SRGBColorSpace}
-            metalness={0.7}
-            roughness={0.1}
-            color='white' side={THREE.DoubleSide} />
-        </mesh>
+          <Center>
+                      <primitive object={nodes.Scene} />          
+          </Center>
+
+          </group> 
       </RigidBody>
 
     </group>
