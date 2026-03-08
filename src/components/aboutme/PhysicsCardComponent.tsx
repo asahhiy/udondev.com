@@ -1,15 +1,20 @@
 'use client'
 import * as THREE from 'three'
-import { useRef, useState } from 'react'
+import { useRef, useState , useEffect} from 'react'
 import { Canvas, extend, useThree, useFrame } from '@react-three/fiber'
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint, RapierRigidBody } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { type ThreeElement } from '@react-three/fiber'
 
-import { Environment, useGLTF, useTexture } from '@react-three/drei'
+import { Environment, useGLTF, useTexture, Lightformer } from '@react-three/drei'
+import { hover } from 'motion'
 
 
 extend({ MeshLineGeometry, MeshLineMaterial })
+useGLTF.preload('/udondevcard.glb')
+useTexture.preload('/namecard.png')
+
+
 declare module '@react-three/fiber' {
   interface ThreeElements {
     meshLineGeometry: ThreeElement<typeof MeshLineGeometry>
@@ -22,7 +27,7 @@ export default function PhysicsCardComponent() {
       <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
         <ambientLight intensity={1.5} />
         <Environment preset='city' />
-        <Physics>
+        <Physics debug={true}>
           <Band />
         </Physics>
       </Canvas>
@@ -52,6 +57,7 @@ function Band() {
   const rot = new THREE.Vector3
   const dir = new THREE.Vector3
   const [dragged, drag] = useState<THREE.Vector3 | false>(false)
+  const [ hovered, hover] = useState(false)
 
   useSphericalJoint(j3, card, [[0, 0, 0], [0, 1.25, 0]])
 
@@ -64,6 +70,13 @@ function Band() {
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1])
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1])
   useRopeJoint(j2, j3, [[0, 0, 0], [0, 0, 0], 1])
+
+    useEffect(() => {
+    if (hovered) {
+      document.body.style.cursor = dragged ? 'grabbing' : 'grab'
+      return () => void (document.body.style.cursor = 'auto')
+    }
+  }, [hovered, dragged])
 
   useFrame((state) => {
     if (dragged) {
@@ -100,6 +113,8 @@ function Band() {
       <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={2}>
         <CuboidCollider args={[0.8, 1.125, 0.01]} />
         <mesh
+          onPointerOver={() => hover(true)}
+          onPointerOut={() => hover(false)}
           onPointerUp={(e) => {
             (e.target as HTMLElement).releasePointerCapture(e.pointerId)
             drag(false)
