@@ -6,7 +6,7 @@ import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphe
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { type ThreeElement } from '@react-three/fiber'
 
-import { Environment, useTexture } from '@react-three/drei'
+import { Environment, useGLTF, useTexture } from '@react-three/drei'
 
 
 extend({ MeshLineGeometry, MeshLineMaterial })
@@ -34,6 +34,12 @@ function Band() {
   const band = useRef<THREE.Mesh>(null)
 
   const cardTexture = useTexture('/namecard.png')
+  const { nodes, materials } = useGLTF('/udondevcard.glb')
+  console.log('down is nodes')
+  console.log(nodes)
+  console.log('===========')
+  console.log(materials)
+  console.log('===========')
 
   const fixed = useRef<RapierRigidBody>(null!)
   const j1 = useRef<RapierRigidBody>(null!)
@@ -94,7 +100,10 @@ function Band() {
       <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={2}>
         <CuboidCollider args={[0.8, 1.125, 0.01]} />
         <mesh
-          onPointerUp={() => drag(false)}
+          onPointerUp={(e) => {
+            (e.target as HTMLElement).releasePointerCapture(e.pointerId)
+            drag(false)
+          }}
           onPointerDown={(e) => drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))}
         >
           <planeGeometry args={[0.8 * 2, 1.125 * 2]} />
