@@ -5,6 +5,10 @@ import { Canvas, extend, useThree, useFrame } from '@react-three/fiber'
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint, RapierRigidBody } from '@react-three/rapier'
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline'
 import { type ThreeElement } from '@react-three/fiber'
+
+import { Environment, useTexture } from '@react-three/drei'
+
+
 extend({ MeshLineGeometry, MeshLineMaterial })
 declare module '@react-three/fiber' {
   interface ThreeElements {
@@ -16,6 +20,8 @@ export default function PhysicsCardComponent() {
   return (
     <div className='h-200'>
       <Canvas camera={{ position: [0, 0, 13], fov: 25 }}>
+        <ambientLight intensity={1.5} />
+        <Environment preset='city' />
         <Physics>
           <Band />
         </Physics>
@@ -26,6 +32,8 @@ export default function PhysicsCardComponent() {
 
 function Band() {
   const band = useRef<THREE.Mesh>(null)
+
+  const cardTexture = useTexture('/namecard.png')
 
   const fixed = useRef<RapierRigidBody>(null!)
   const j1 = useRef<RapierRigidBody>(null!)
@@ -86,11 +94,16 @@ function Band() {
       <RigidBody ref={card} type={dragged ? 'kinematicPosition' : 'dynamic'} angularDamping={2} linearDamping={2}>
         <CuboidCollider args={[0.8, 1.125, 0.01]} />
         <mesh
-          onPointerUp={(e) => drag(false)}
+          onPointerUp={() => drag(false)}
           onPointerDown={(e) => drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation())))}
         >
           <planeGeometry args={[0.8 * 2, 1.125 * 2]} />
-          <meshBasicMaterial color='black' side={THREE.DoubleSide} />
+          <meshStandardMaterial
+            map={cardTexture}
+            map-colorSpace={THREE.SRGBColorSpace}
+            metalness={0.7}
+            roughness={0.1}
+            color='white' side={THREE.DoubleSide} />
         </mesh>
       </RigidBody>
 
