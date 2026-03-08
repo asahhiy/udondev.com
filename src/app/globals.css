@@ -19,12 +19,7 @@
   --font-pathway: "Pathway Gothic One", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: ;
-    --foreground: #171717;
-  }
-}
+
 
 body {
   background: #ededed;
