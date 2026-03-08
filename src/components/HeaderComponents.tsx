@@ -8,18 +8,13 @@ export default function HeaderComponents() {
   return (
     <div className='flex justify-between bg-black'>
       <header className='font-bebas lg:text-7xl md:text-xl flex block-inline text-creamwhite items-center m-1'>udondev.com</header>
-      <div className="space-x-2 flex items-center">
-        <Link href='/' className="text-creamwhite" >
-          what
-        </Link>
-        <Link href='/blog' className="text-creamwhite">
-          blog
-        </Link>
+      <div className='text-creamwhite flex items-center '>
+
+
       </div>
 
       <div className='w-[200px] flex items-center'>
-
-        <div className="text-creamwhite mx-2">
+        <div className="text-creamwhite lg:text-xl md:text-sm mx-2">
           English
         </div>
         <input type="checkbox" onChange={() => {
