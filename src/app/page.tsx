@@ -2,10 +2,7 @@ import PhysicsCardComponent from "@/components/aboutme/PhysicsCardComponent"
 import AboutmeComponent from "@/components/AboutmeComponent"
 import ContactComponent from "@/components/ContactComponent"
 import SkillsComponent from "@/components/SkillsComponent"
-import { hc } from "hono/client"
-import type { AppType } from "@/app/api/[...route]/route"
 import WorksComponent from "@/components/WorksComponent"
-import GithubComponent from "@/components/skills/GithubComponent"
 import { Suspense } from "react"
 
 
@@ -39,11 +36,7 @@ export default function page() {
           </section>
         </div>
         <div className="col-span-12 lg:col-span-5 bg-amber-400 h-auto rounded-2xl">
-          <Suspense fallback={<div className="animate-pulse bg-gray-200 h-32 rounded">
 
-          </div>}>
-            <GithubComponent />
-          </Suspense>
 
         </div>
         <div className="col-span-12 lg:col-span-3 bg-amber-300 h-auto rounded-2xl" />
