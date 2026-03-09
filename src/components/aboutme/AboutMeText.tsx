@@ -20,7 +20,7 @@ export default function AboutMeText() {
         }}
         style={{display: 'inline-block'}}
         >
-        <h1 className='font-bold font-pathway text-9xl'>Web / Mobile  <br />Developer</h1>
+        <h1 className='font-bold font-pathway lg:text-9xl'>Web / Mobile  <br />Developer</h1>
 
 
       </motion.div>
@@ -53,7 +53,7 @@ export default function AboutMeText() {
           Currently enrolled in the Security and Network Engineering Course. <br />
           I am currently focusing my studies on front-end development.
         </div> : <div className="my-6 mx-6 flex">29卒<br />立命館大学情報理工学部<br />セキュリティネットワークコース
-          <br />フロントエンド、モバイル開発が趣味。<br />最近はAtcoderをやり始めました。</div>}
+          <br />フロントエンド、モバイル開発が趣味。<br />最近Atcoder始めました。</div>}
 
       </motion.div>
 

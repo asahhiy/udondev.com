@@ -1,19 +1,16 @@
-import PhysicsCardComponent from "@/components/aboutme/PhysicsCardComponent"
-import AboutmeComponent from "@/components/AboutmeComponent"
-import ContactComponent from "@/components/ContactComponent"
-import ScrollBaner from "@/components/skills/BechStackBaner"
-import SkillsComponent from "@/components/SkillsComponent"
-import WorksComponent from "@/components/WorksComponent"
-import { Suspense } from "react"
-
-
-
+import PhysicsCardComponent from "@/components/aboutme/PhysicsCardComponent";
+import AboutmeComponent from "@/components/AboutmeComponent";
+import ContactComponent from "@/components/ContactComponent";
+import ScrollBaner from "@/components/skills/BechStackBaner";
+import SkillsComponent from "@/components/SkillsComponent";
+import WorksComponent from "@/components/WorksComponent";
+import { Suspense } from "react";
 
 export default function page() {
   return (
-    <div className="items-center space-y-4">
-      <div className="grid grid-cols-12 gap-4 mx-10" >
-        <div className="col-span-12 lg:col-span-6  h-auto rounded-2xl" >
+    <div className="items-center">
+      <div className="grid grid-cols-12 gap-4 mx-10">
+        <div className="col-span-12 lg:col-span-6  h-auto rounded-2xl">
           <section id="about">
             <AboutmeComponent />
           </section>
@@ -21,16 +18,18 @@ export default function page() {
         <div className="col-span-12 lg:col-span-6  h-auto rounded-2xl">
           <PhysicsCardComponent />
         </div>
-
       </div>
-        <ScrollBaner />
-<div className="col-span-12 lg:col-span-6  h-auto rounded-2xl" ></div>
+      <ScrollBaner />
+
+      <div className="grid grid-cols-12 gap-4 mx-10">
+        {" "}
+        <div className="col-span-12 lg:col-span-6  h-auto rounded-2xl"></div>
         <div className="col-span-12 lg:col-span-8 bg-amber-300 h-auto rounded-2xl space-y-5">
           <section id="works">
             <WorksComponent />
           </section>
         </div>
-        <div className="col-span-12 lg:col-span-4 bg-amber-300 h-auto rounded-2xl" >
+        <div className="col-span-12 lg:col-span-4 bg-amber-300 h-auto rounded-2xl">
           <section id="skills">
             <SkillsComponent />
           </section>
@@ -40,14 +39,9 @@ export default function page() {
             <ContactComponent />
           </section>
         </div>
-        <div className="col-span-12 lg:col-span-5 bg-amber-400 h-auto rounded-2xl">
-
-
-        </div>
+        <div className="col-span-12 lg:col-span-5 bg-amber-400 h-auto rounded-2xl"></div>
         <div className="col-span-12 lg:col-span-3 bg-amber-300 h-auto rounded-2xl" />
-
-
-
+      </div>
     </div>
-  )
+  );
 }
